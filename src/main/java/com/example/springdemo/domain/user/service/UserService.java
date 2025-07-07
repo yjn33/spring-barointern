@@ -32,7 +32,16 @@ public class UserService {
 		userRepository.save(user);
 
 		return new UserInfoResponseDto(user);
+	}
 
+
+	@Transactional
+	public UserInfoResponseDto checkMyUserInfo(AuthUser authUser) {
+
+		User user = userRepository.findById(authUser.getId())
+			.orElseThrow(() -> new IllegalArgumentException("해당 사용자는 존재하지 않습니다"));
+
+		return new UserInfoResponseDto(user);
 	}
 
 
