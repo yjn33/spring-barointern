@@ -6,6 +6,8 @@ import com.example.springdemo.global.auth.dto.request.LoginRequestDto;
 import com.example.springdemo.global.auth.dto.request.SignUpReqeustDto;
 import com.example.springdemo.global.auth.dto.response.LoginResponseDto;
 import com.example.springdemo.global.auth.dto.response.SignUpResponseDto;
+import com.example.springdemo.global.common.exception.InvalidUserInfoException;
+import com.example.springdemo.global.common.exception.UserExistException;
 import com.example.springdemo.global.common.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ public class AuthService {
 	public SignUpResponseDto signUp(SignUpReqeustDto request) {
 		// 이미 존재하는 username 이므로 예외처리
 		if (userRepository.existsByUsername(request.getUsername())) {
-			throw new IllegalStateException("이미 존재하는 회원입니다");
+			throw new UserExistException();
 		}
 
 		// 회원가입 가능한 username
@@ -39,13 +41,12 @@ public class AuthService {
 
 	@Transactional(readOnly = true)
 	public LoginResponseDto login(LoginRequestDto request) {
-		User user = userRepository.findByUsername(request.getUsername()).orElseThrow(
-			() -> new IllegalStateException("등록된 회원이 아닙니다")
-		);
+		User user = userRepository.findByUsername(request.getUsername())
+			.orElseThrow(InvalidUserInfoException::new);
 
 		String password = request.getPassword();
 		if (!password.equals(user.getPassword())) {
-			throw new IllegalStateException("비밀번호가 틀렸어요");
+			throw new InvalidUserInfoException();
 		}
 
 		// 비밀번호가 맞을 경우
