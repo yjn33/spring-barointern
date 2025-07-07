@@ -1,5 +1,47 @@
 # 바로인턴 14기 자바 스프링 과제 #
-작성중,,,
+
+2025년 7월 8일 화요일 23시까지 AWS 서버에 배포중
+
+회원가입 POST
+http://3.34.52.196:8080/auth/signup
+```
+{
+    "username" : "john",
+    "password" : "1234",
+    "nickname" : "hello"
+}
+```
+
+로그인 POST
+http://3.34.52.196:8080/auth/login
+```
+{
+    "username" : "john",
+    "password" : "1234"
+}
+```
+
+권한 부여 PATCH
+http://3.34.52.196:8080/api/admin/users/{userId}/roles
+```
+http://3.34.52.196:8080/api/admin/users/1/roles
+```
+
+현재 자신의 UserInfo 조회 GET
+http://3.34.52.196:8080/api/users
+
+
+사용자 닉네임 변경 PUT
+http://3.34.52.196:8080/api/users
+```
+{
+    "nickname" : "newNickname"
+}
+```
+
+
+
+---
 
 ## 회원가입 ##
 <img width="353" height="331" alt="Image" src="https://github.com/user-attachments/assets/acf252af-4739-4f62-ad4f-007c51ae6d20" />
