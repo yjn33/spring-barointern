@@ -50,5 +50,9 @@ public class User {
 		this.nickname = requestDto.getNickname();
 	}
 
+	public void updateUserRole(UserRole role) {
+		this.role = role;
+	}
+
 
 }
